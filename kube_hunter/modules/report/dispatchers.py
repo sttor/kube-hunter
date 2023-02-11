@@ -10,9 +10,10 @@ class HTTPDispatcher:
         logger.debug("Dispatching report via HTTP")
         dispatch_method = os.environ.get("KUBEHUNTER_HTTP_DISPATCH_METHOD", "POST").upper()
         dispatch_url = os.environ.get("KUBEHUNTER_HTTP_DISPATCH_URL", "https://localhost/")
+        headers = {"Content-Type": "application/json", "Authorization": os.environ.get("HTTP_AUTH_TOKEN","")}
         try:
             r = requests.request(
-                dispatch_method, dispatch_url, json=report, headers={"Content-Type": "application/json"}, verify=False
+                dispatch_method, dispatch_url, json=report, headers=headers, verify=False
             )
             r.raise_for_status()
             logger.info(f"Report was dispatched to: {dispatch_url}")
