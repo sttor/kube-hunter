@@ -21,6 +21,7 @@ class CapNetRawEnabled(Event, Vulnerability):
             KubernetesCluster,
             name="CAP_NET_RAW Enabled",
             category=ARPPoisoningTechnique,
+            vid="PEN0039"
         )
 
 

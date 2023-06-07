@@ -40,6 +40,7 @@ class DirectoryTraversalWithKubelet(Vulnerability, Event):
             KubernetesCluster,
             "Root Traversal Read On The Kubelet",
             category=HostPathMountPrivilegeEscalationTechnique,
+            vid="PEN0052"
         )
         self.output = output
         self.evidence = f"output: {self.output}"
