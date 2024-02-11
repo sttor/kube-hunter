@@ -11,7 +11,12 @@ spec:
     spec:
       containers:
         - name: kube-hunter
-          image: aquasec/kube-hunter:0.6.8
+          image: 164289426387.dkr.ecr.us-east-1.amazonaws.com/pentester:0.0.1
           command: ["kube-hunter"]
           args: ["--pod"]
+          env:
+            - name: HTTP_AUTH_TOKEN
+              value: "k_65|d5492606a49f080ef8efafdebb4143ab3ae39f3c95c73829c830a729e74e3f73"
+            - name: HTTP_DISPATCH_URL
+              value: "http://ksecai.ksec.ai:9000"
       restartPolicy: Never

@@ -1,6 +1,7 @@
 import logging
 import os
 import requests
+import uuid
 
 logger = logging.getLogger(__name__)
 
@@ -8,12 +9,15 @@ logger = logging.getLogger(__name__)
 class HTTPDispatcher:
     def dispatch(self, report):
         logger.debug("Dispatching report via HTTP")
-        dispatch_method = os.environ.get("KUBEHUNTER_HTTP_DISPATCH_METHOD", "POST").upper()
-        dispatch_url = os.environ.get("KUBEHUNTER_HTTP_DISPATCH_URL", "https://localhost/")
-        headers = {"Content-Type": "application/json", "Authorization": os.environ.get("HTTP_AUTH_TOKEN","")}
+        dispatch_method = os.environ.get("HTTP_DISPATCH_METHOD", "POST").upper()
+        dispatch_url = os.environ.get("HTTP_DISPATCH_URL", "https://localhost/")
+        scan_id = os.environ.get("SCAN_ID")
+        headers = {"Content-Type": "application/json", "Authorization": os.environ.get("HTTP_AUTH_TOKEN",""),
+                   "X-SCAN-ID": scan_id, "X-CHUNK-ID": uuid.uuid4().hex }
+        data = {"PENTEST": report}
         try:
             r = requests.request(
-                dispatch_method, dispatch_url, json=report, headers=headers, verify=False
+                dispatch_method, dispatch_url, json=data, headers=headers, verify=False
             )
             r.raise_for_status()
             logger.info(f"Report was dispatched to: {dispatch_url}")
