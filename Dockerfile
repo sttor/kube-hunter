@@ -29,6 +29,6 @@ COPY --from=builder /usr/local/bin/kube-hunter /usr/local/bin/kube-hunter
 # Add default plugins: https://github.com/aquasecurity/kube-hunter-plugins 
 RUN pip install kube-hunter-arp-spoof>=0.0.3 kube-hunter-dns-spoof>=0.0.3
 
-#ENTRYPOINT ["kube-hunter"]
+ENTRYPOINT []
 
 CMD ["kube-hunter", "--pod", "--report", "json", "--dispatch", "http"]
